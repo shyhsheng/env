@@ -1,0 +1,18 @@
+# 自定義補全函數
+_iw_dev_completions() {
+    local cur prev
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    # 如果前一個單詞是 'dev'，進行網絡接口補全
+    if [[ "${prev}" == "dev" ]]; then
+        COMPREPLY=( $(compgen -W "$(ifconfig -a | awk '/^[a-zA-Z0-9]/ {print $1}' | cut -d':' -f1)" -- "${cur}") )
+    elif [[  "${prev}" == "mesh" ]]; then
+        COMPREPLY=( $(compgen -W "join leave" -- "${cur}"))
+    else
+    	COMPREPLY=( $(compgen -f -- "${cur}") )
+    fi
+}
+
+# 為 iw 命令設置補全函數
+complete -F _iw_dev_completions iw

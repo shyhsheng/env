@@ -1,0 +1,126 @@
+
+
+##"sync=","reset=","pushmc22=","pushims=","pushn","upload="
+
+function _pw()
+{
+    local cur prev cmds
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    cmds="--sync --reset --push --upload --pushn --svr -h"
+
+    for ((i=1; i <= COMP_CWORD; i++)); do
+      cur="${COMP_WORDS[i]}"
+      case "${cur}" in
+        *)
+          where=cmds
+          break
+        ;;
+      esac
+    done
+
+    case "${where}" in
+    cmds)
+      if [[ $i -eq $COMP_CWORD ]]; then
+          COMPREPLY=( $(compgen -W "$cmds" -- "$cur") )
+      fi
+    return 0
+    ;;
+    esac
+}
+complete -o default -F _pw pw
+
+
+function _d()
+{
+    local cur prev cmds c where
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    cmds="push pull trace rm dpsys"
+
+  	for ((i=1; i <= COMP_CWORD; i++)); do
+    	cur="${COMP_WORDS[i]}"
+    	case "${cur}" in
+        *)
+        	where=cmds
+         	break
+        ;;
+    	esac
+  	done
+
+  	case "${where}" in
+    cmds)
+    	if [[ $i -eq $COMP_CWORD ]]; then
+        	COMPREPLY=( $(compgen -W "$cmds" -- "$cur") )
+        else
+        	i=$((i+1))
+            case "${cur}" in
+                pull)
+                    if [[ $COMP_CWORD == $i ]]; then
+                    	args="ini bdf logcat fwlog"
+                        COMPREPLY=( $(compgen -W "${args}" -- "${COMP_WORDS[i]}") )
+                    fi
+                    ;;
+                push)
+                    if [[ $COMP_CWORD == $i ]]; then
+                        args="ini bdf opt viceopt fbsvr wificond wpasup hostapd netd dnsm qsapsdk whidl wlibhal wlibsys wigig wigighal wdriver"
+                        COMPREPLY=( $(compgen -W "${args}" -- "${COMP_WORDS[i]}") )
+                    fi
+                    ;;
+                trace)
+                    if [[ $COMP_CWORD == $i ]]; then
+                        args="on off log taillog"
+                        COMPREPLY=( $(compgen -W "${args}" -- "${COMP_WORDS[i]}") )
+                    fi
+                    ;;
+                dpsys)
+                    if [[ $COMP_CWORD == $i ]]; then
+                        args="netd netdtc"
+                        COMPREPLY=( $(compgen -W "${args}" -- "${COMP_WORDS[i]}") )
+                    fi
+                    ;;
+                rm)
+                    if [[ $COMP_CWORD == $i ]]; then
+                        args="logcat fwlog"
+                        COMPREPLY=( $(compgen -W "${args}" -- "${COMP_WORDS[i]}") )
+                    fi
+                    ;;
+            esac
+        fi
+    return 0
+    ;;
+  	esac
+}
+complete -o default -F _d d
+
+
+function _nj()
+{
+    local cur prev cmds
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    cmds="wifiapex vicewifi wifidriver wifihidl wifiaidl wpa_supplicant boot system wifiextd"
+
+    for ((i=1; i <= COMP_CWORD; i++)); do
+      cur="${COMP_WORDS[i]}"
+      case "${cur}" in
+        *)
+          where=cmds
+          break
+        ;;
+      esac
+    done
+
+    case "${where}" in
+    cmds)
+      if [[ $i -eq $COMP_CWORD ]]; then
+          COMPREPLY=( $(compgen -W "$cmds" -- "$cur") )
+      fi
+    return 0
+    ;;
+    esac
+}
+complete -o default -F _nj nj
