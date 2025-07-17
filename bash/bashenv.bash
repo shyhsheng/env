@@ -29,6 +29,7 @@ function git_since_last_commit {
     echo "${hours_since_last_commit}h${minutes_since_last_commit}m ";
 }
 
+. ~/.config/env/bash/grep.bash
 . ~/.config/env/bash/completion/mybash_completion
 . ~/.config/env/bash/completion/tig-completion.bash
 . ~/.config/env/bash/completion/iw-completion
